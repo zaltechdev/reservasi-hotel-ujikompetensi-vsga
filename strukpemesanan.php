@@ -3,8 +3,8 @@
 require_once __DIR__ . "/config/configs.php";
 
 if(isset($_GET['pesanan']) && !empty($_GET['pesanan'])){
-    $nama = base64_decode($_GET['pesanan']);
 
+    $nama = base64_decode($_GET['pesanan']);
     $res = sql("SELECT * FROM `pemesanan` WHERE nama = :nama",[":nama" => $nama]);
 
     if($res['row'] === 0){
@@ -28,9 +28,9 @@ else{
 
 function image(string $tipe){
     switch(strtolower($tipe)){
-        case "standar" : return "https://asset.kompas.com/crops/33vZ6Rt128kzOfcC_aU3fy7oo0I=/0x36:640x463/750x500/data/photo/2020/07/10/5f081b41cc76c.jpeg";
-        case "family" : return "https://images.tokopedia.net/blog-tokopedia-com/uploads/2020/02/4.-Family-room-sumber-gambar-newsaphirhotel.jpg";
-        case "deluxe" : return "https://backend.parador-hotels.com/wp-content/uploads/2023/04/Deluxe-Room-Artinya-Apa.jpg";
+        case "standar" : return "./res/img/kamar-standar.png";
+        case "family" : return "./res/img/kamar-family.png";
+        case "deluxe" : return "./res/img/kamar-deluxe.png";
     }
 }
 
@@ -41,7 +41,7 @@ function image(string $tipe){
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="bootstrap.css">
+        <link rel="stylesheet" href="./res/css/bootstrap.css">
         <title>Struk Pesanan</title>
         <style>
             #img{
@@ -84,7 +84,7 @@ function image(string $tipe){
                 <td><?=$tipe?></td>
             </tr>
             <tr>
-                <td>Durasi</td>
+                <td>Durasi penginapan</td>
                 <td><?=$durasi?> Hari</td>
             </tr>
             <tr>

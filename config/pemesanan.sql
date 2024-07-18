@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 18 Jul 2024 pada 06.44
+-- Waktu pembuatan: 18 Jul 2024 pada 15.23
 -- Versi server: 8.0.30
 -- Versi PHP: 8.3.9
 
@@ -46,10 +46,8 @@ CREATE TABLE `pemesanan` (
 --
 
 INSERT INTO `pemesanan` (`id`, `nama`, `jeniskelamin`, `nomorktp`, `tipekamar`, `hargakamarperhari`, `tglpesan`, `durasi`, `sarapan`, `diskon`, `final`) VALUES
-(10, 'saskia', 'perempuan', '2345676545671212', 'Family', 300000, '2024-07-18 11:43:18', 1, 80000, 0, 380000),
-(11, 'zalfa', 'laki-laki', '2345676545671234', 'Deluxe', 400000, '2024-07-18 11:47:17', 10, 80000, 0.1, 3680000),
-(12, 'zalfa', 'laki-laki', '2345676545671234', 'Family', 300000, '2024-07-18 11:49:30', 1, 80000, 0, 380000),
-(13, 'zalfa', 'laki-laki', '2345676545671234', 'Family', 300000, '2024-07-18 13:29:52', 1, 80000, 0, 380000);
+(15, 'zalfa', 'laki-laki', '2345676545671234', 'Standar', 200000, '2024-07-18 19:47:13', 7, 0, 0.1, 1260000),
+(16, 'ghani', 'laki-laki', '0987654321234513', 'Family', 300000, '2024-07-18 22:20:32', 4, 80000, 0.1, 1160000);
 
 --
 -- Indexes for dumped tables
@@ -69,7 +67,7 @@ ALTER TABLE `pemesanan`
 -- AUTO_INCREMENT untuk tabel `pemesanan`
 --
 ALTER TABLE `pemesanan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -3,6 +3,7 @@
 require_once __DIR__ . "/config/configs.php";
 
 if(isset($_POST['pesan']) && $_SERVER['REQUEST_METHOD'] === "POST"){
+
     define("discount",0.1);
     define("lamahari_dsc",3);
     define("typekamar",[
@@ -72,14 +73,17 @@ if(isset($_POST['pesan']) && $_SERVER['REQUEST_METHOD'] === "POST"){
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="bootstrap.css">
-        <script src="jquery.js"></script>
+        <link rel="stylesheet" href="./res/css/bootstrap.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <script src="./res/js/jquery.js"></script>
         <title>Pemesanan Hotel</title>
     </head>
     <body class="d-flex flex-column vh-100 w-100 align-items-center">
         <form class="d-flex flex-column mt-2 pb-5" style="width:400px" action="pemesanan.php" method="POST">
-            <a href="index.php" class="btn btn-secondary fixed-top mt-4 mx-4" style="width:max-content;">Kembali ke Beranda</a>
-            <p class="fs-3 fw-bold">Pesan Kamar</p>
+            <div class="d-flex flex-row align-items-center gap-3 mb-3">
+                <a href="index.php" class="fas fa-house fs-6 text-primary"></a>|
+                <p class="fs-3 fw-bold m-0">Pesan Kamar</p>
+            </div>
             <div class="mb-3">
                 <label for="namapemesan" class="form-label">Nama lengkap</label>
                 <input type="text" class="form-control" id="namapemesan" name="pemesan" required>
@@ -97,7 +101,7 @@ if(isset($_POST['pesan']) && $_SERVER['REQUEST_METHOD'] === "POST"){
             </div>
             <div class="mt-1 mb-3">
                 <label for="nomorktp" class="form-label">Nomor identitas</label>
-                <input type="text" class="form-control" id="nomorktp" name="nomorktp" required maxlength="16" minlength="16">
+                <input type="number" class="form-control" id="nomorktp" name="nomorktp" required max="9999999999999999">
             </div>
             <label for="tipekamar" class="mb-2">Tipe kamar</label>
             <select class="form-select" id="tipekamar" name="tipekamar" required>
@@ -125,6 +129,13 @@ if(isset($_POST['pesan']) && $_SERVER['REQUEST_METHOD'] === "POST"){
         </form>
     </body>
     <script>
+
+        $("#nomorktp").on("input", () => {
+            var value = $("#nomorktp").val();
+            if (value.length > 16) {
+                $("#nomorktp").val(value.substring(0, 16));
+            }
+        });
 
         function calc(){
             
