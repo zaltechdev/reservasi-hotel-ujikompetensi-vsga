@@ -7,9 +7,9 @@ if(isset($_POST['pesan']) && $_SERVER['REQUEST_METHOD'] === "POST"){
     define("discount",0.1);
     define("lamahari_dsc",3);
     define("typekamar",[
-        "200000" => "Standar",
-        "300000" => "Family",
-        "400000" => "Deluxe"
+        "100000" => "Standar",
+        "200000" => "Family",
+        "300000" => "Deluxe"
     ]);
 
     if(
@@ -27,41 +27,48 @@ if(isset($_POST['pesan']) && $_SERVER['REQUEST_METHOD'] === "POST"){
         $tglpesan = htmlspecialchars($_POST['tanggalpesan']) . date(" G:i:s");
         $durasi = intval(htmlspecialchars($_POST['durasiinap']));
 
-        $sarapan = 0; $presdis = 0;
-        if(isset($_POST['breakfast'])){
-            $sarapan = htmlspecialchars($_POST['breakfast']);
-        }
+        if(strlen($ktp) === 16){
 
-        $hitung = ($durasi * $kamar);
-        if($durasi > lamahari_dsc){
-            $presdis = discount;
-            $hargadis = $hitung * discount;
-            $final = ($hitung - $hargadis) + $sarapan;
+            $sarapan = 0; $presdis = 0;
+            if(isset($_POST['breakfast'])){
+                $sarapan = htmlspecialchars($_POST['breakfast']);
+            }
+    
+            $hitung = ($durasi * $kamar);
+            if($durasi > lamahari_dsc){
+                $presdis = discount;
+                $hargadis = $hitung * discount;
+                $final = ($hitung - $hargadis) + $sarapan;
+            }
+            else{
+                $final = $hitung + $sarapan;
+            }
+    
+            if(array_key_exists($kamar,typekamar)){
+                $tipe = typekamar[$kamar];
+            }
+    
+            sql("INSERT INTO `pemesanan` (nama,jeniskelamin,nomorktp,tipekamar,hargakamarperhari,tglpesan,durasi,sarapan,diskon,final) VALUES (
+                :nama,:jeniskelamin,:nomorktp,:tipekamar,:hargakamarperhari,:tglpesan,:durasi,:sarapan,:diskon,:final
+            )", [
+                ":nama" => $nama,
+                ":jeniskelamin" => $jk,
+                ":nomorktp" => $ktp,
+                ":tipekamar" => $tipe,
+                ":hargakamarperhari" => $kamar,
+                ":tglpesan" => $tglpesan,
+                ":durasi" => $durasi,
+                ":sarapan" => $sarapan,
+                ":diskon" => $presdis,
+                ":final" => $final
+            ]);
+    
+            header("location:strukpemesanan.php?pesanan=".base64_encode($nama));
         }
         else{
-            $final = $hitung + $sarapan;
+            $ktp_invalid = true;
         }
 
-        if(array_key_exists($kamar,typekamar)){
-            $tipe = typekamar[$kamar];
-        }
-
-        sql("INSERT INTO `pemesanan` (nama,jeniskelamin,nomorktp,tipekamar,hargakamarperhari,tglpesan,durasi,sarapan,diskon,final) VALUES (
-            :nama,:jeniskelamin,:nomorktp,:tipekamar,:hargakamarperhari,:tglpesan,:durasi,:sarapan,:diskon,:final
-        )", [
-            ":nama" => $nama,
-            ":jeniskelamin" => $jk,
-            ":nomorktp" => $ktp,
-            ":tipekamar" => $tipe,
-            ":hargakamarperhari" => $kamar,
-            ":tglpesan" => $tglpesan,
-            ":durasi" => $durasi,
-            ":sarapan" => $sarapan,
-            ":diskon" => $presdis,
-            ":final" => $final
-        ]);
-
-        header("location:strukpemesanan.php?pesanan=".base64_encode($nama));
     }
 }
 
@@ -101,22 +108,25 @@ if(isset($_POST['pesan']) && $_SERVER['REQUEST_METHOD'] === "POST"){
             </div>
             <div class="mt-1 mb-3">
                 <label for="nomorktp" class="form-label">Nomor identitas</label>
-                <input type="number" class="form-control" id="nomorktp" name="nomorktp" required max="9999999999999999">
+                <input type="number" class="form-control" id="nomorktp" name="nomorktp" required>
+                <?php if(isset($ktp_invalid)) : ?><label for="nomorktp" class="form-text text-danger" style="font-size:.9rem">Nomor Identitas atau KTP salah, harus 16 digit!</label><?php endif;?>
             </div>
             <label for="tipekamar" class="mb-2">Tipe kamar</label>
             <select class="form-select" id="tipekamar" name="tipekamar" required>
-                <option selected value="0">Pilih Tipe kamar</option>
-                <option value="200000">Standar (Rp 200.000,-)</option>
-                <option value="300000">Family (Rp 300.000,-)</option>
-                <option value="400000">Deluxe (Rp 400.000,-)</option>
+                <option selected value="0">- Pilih Tipe kamar -</option>
+                <option value="100000">Standar (Rp 100.000,-)</option>
+                <option value="200000">Family (Rp 200.000,-)</option>
+                <option value="300000">Deluxe (Rp 300.000,-)</option>
             </select>
+            <label for="tipekamar" class="form-text text-danger d-none" id="tipekamar-notice" style="font-size:.9rem">Pilih tipe kamar anda!</label>
             <div class="mt-3">
                 <label for="tanggalpesan" class="form-label">Tanggal pesan</label>
                 <input type="date" class="form-control" id="tanggalpesan" name="tanggalpesan" required>
             </div>    
             <div class="mt-3">
-                <label for="durasiinap" class="form-label">Durasi menginap (Lebih 3 hari diskon 10%)</label>
+                <label for="durasiinap" class="form-label">Durasi menginap (hari) (Lebih 3 hari diskon 10%)</label>
                 <input type="number" class="form-control" id="durasiinap" name="durasiinap" required>
+                <label for="durasiinap" class="form-text text-danger d-none" id="durasi-notice" style="font-size:.9rem">Masukkan durasi penginapan anda!</label>
             </div>    
             <div class="d-flex flex-row align-items-center gap-3 mt-3">
                 <input class="form-check-input" type="checkbox" id="breakfast" value="80000" name="breakfast">
@@ -130,22 +140,31 @@ if(isset($_POST['pesan']) && $_SERVER['REQUEST_METHOD'] === "POST"){
     </body>
     <script>
 
-        $("#nomorktp").on("input", () => {
-            var value = $("#nomorktp").val();
-            if (value.length > 16) {
-                $("#nomorktp").val(value.substring(0, 16));
-            }
-        });
-
-        function calc(){
+        const calc = () => {
             
             const presdis = 0.1;
             const kamar = parseFloat($("#tipekamar").val());
             const durasi = parseFloat($("#durasiinap").val()); 
             var sarapan = 0;
 
-            if(kamar === "" || kamar === 0 || durasi === ""){
+            if(durasi === "" || durasi <= 0){
+                $("#durasi-notice").removeClass("d-none");
+                $("#durasi-notice").addClass("d-flex");
                 return false;
+            }
+            else{
+                $("#durasi-notice").removeClass("d-flex");                
+                $("#durasi-notice").addClass("d-none");
+            }
+
+            if(kamar === "" || kamar <= 0){
+                $("#tipekamar-notice").removeClass("d-none");
+                $("#tipekamar-notice").addClass("d-flex");
+                return false;
+            }
+            else{
+                $("#tipekamar-notice").removeClass("d-flex");                
+                $("#tipekamar-notice").addClass("d-none");
             }
 
             if($("#breakfast").is(":checked")){

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 18 Jul 2024 pada 15.23
+-- Waktu pembuatan: 18 Jul 2024 pada 16.16
 -- Versi server: 8.0.30
 -- Versi PHP: 8.3.9
 
@@ -46,8 +46,7 @@ CREATE TABLE `pemesanan` (
 --
 
 INSERT INTO `pemesanan` (`id`, `nama`, `jeniskelamin`, `nomorktp`, `tipekamar`, `hargakamarperhari`, `tglpesan`, `durasi`, `sarapan`, `diskon`, `final`) VALUES
-(15, 'zalfa', 'laki-laki', '2345676545671234', 'Standar', 200000, '2024-07-18 19:47:13', 7, 0, 0.1, 1260000),
-(16, 'ghani', 'laki-laki', '0987654321234513', 'Family', 300000, '2024-07-18 22:20:32', 4, 80000, 0.1, 1160000);
+(21, 'zalfa', 'laki-laki', '2345676545671234', 'Standar', 100000, '2024-07-18 23:15:48', 1, 80000, 0, 180000);
 
 --
 -- Indexes for dumped tables
@@ -67,7 +66,7 @@ ALTER TABLE `pemesanan`
 -- AUTO_INCREMENT untuk tabel `pemesanan`
 --
 ALTER TABLE `pemesanan`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -191,7 +191,7 @@
                         <div class="card-body text-dark">
                             <h5 class="card-title">Kelas Standar</h5>
                             <p class="card-text">1 Kasur, AC, kamar mandi/WC dalam, Meja 1</p>
-                            <p class="text-primary fs-5 m-0 fw-bold">Rp 200.000,- /hari</p>
+                            <p class="text-primary fs-5 m-0 fw-bold">Rp 100.000,- /hari</p>
                         </div>
                     </div>    
                     <div class="card">
@@ -205,7 +205,7 @@
                         <div class="card-body text-dark">
                             <h5 class="card-title fw-bold">Kelas Family</h5>
                             <p class="card-text">2-3 Kasur, AC, kamar mandi/WC dalam, 1 Meja, 1 Sofa </p>
-                            <p class="text-primary fs-5 m-0 fw-bold">Rp 300.000,- /hari</p>
+                            <p class="text-primary fs-5 m-0 fw-bold">Rp 200.000,- /hari</p>
                         </div>
                     </div>
                     <div class="card">
@@ -219,7 +219,7 @@
                         <div class="card-body text-dark">
                             <h5 class="card-title fw-bold">Kelas Deluxe</h5>
                             <p class="card-text">1 Kasur, AC, kamar mandi/WC dalam, Meja, Sofa</p>
-                            <p class="text-primary fs-5 m-0 fw-bold">Rp 400.000,- /hari</p>
+                            <p class="text-primary fs-5 m-0 fw-bold">Rp 300.000,- /hari</p>
                         </div>
                     </div>
                     <div class="p-4 space"></div>
